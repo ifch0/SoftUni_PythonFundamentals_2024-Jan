@@ -152,5 +152,116 @@ if matrix[2][0] == matrix[1][1] == matrix[0][2] == 2:
 print(output)
 
 # 06. List Manipulator
+# 80/100 in Judge.
 
-TBD
+from math import inf
+
+input_string = input()
+
+input_list = [int(x) for x in input_string.split(' ') ]
+
+list_length = len(input_list)
+temp_list = []
+first_last = []
+output = ''
+
+end = False
+
+def exchange(index):
+    temp_list = []
+    for i in range(index +1, list_length):
+        temp_list.append(input_list[i])
+    for i in range(0, index +1):
+        temp_list.append(input_list[i])
+
+    return (temp_list)
+
+def find_min(even_odd):
+    min = inf
+    position = 0
+    for i in range(list_length):
+        if input_list[i] <= min:
+            if even_odd == 'even' and input_list[i] % 2 == 0:
+                min = input_list[i]
+                position = i
+            elif even_odd == 'odd' and input_list[i] % 2 != 0 and input_list[i] and input_list[i] != 0:
+                min = input_list[i]
+                position = i
+
+    if min != inf:
+        return position
+    else:
+        return 'No matches'
+
+def find_max(even_odd):
+    max = -inf
+    position = 0
+    for i in range(list_length):
+        if input_list[i] >= max:
+            if even_odd == 'even' and input_list[i] % 2 == 0:
+                max = input_list[i]
+                position = i
+            elif even_odd == 'odd' and input_list[i] % 2 != 0:
+                max = input_list[i]
+                position = i
+
+    if max != -inf:
+        return position
+    else:
+        return 'No matches'
+
+def first_count(count, even_odd):
+    temp_list = []
+    for i in range(list_length):
+            if even_odd == 'even' and input_list[i] % 2 == 0:
+                temp_list.append(input_list[i])
+            elif even_odd == 'odd' and input_list[i] % 2 != 0:
+                temp_list.append(input_list[i])
+
+    return temp_list[0:count]
+
+def last_count(count, even_odd):
+    temp_list = []
+    for i in range(list_length - 1, -1, -1):
+            if even_odd == 'even' and input_list[i] % 2 == 0:
+                temp_list.append(input_list[i])
+            elif even_odd == 'odd' and input_list[i] % 2 != 0 and input_list:
+                temp_list.append(input_list[i])
+
+    return temp_list[0:count]
+
+while end == False:
+    command_input = input()
+    split_command = command_input.split(' ')
+
+    if split_command[0] == 'end':
+        end = True
+    elif split_command[0] == 'exchange':
+        if 0 <= int(split_command[1]) < list_length:
+            input_list = exchange(int(split_command[1]))
+        else:
+            print(f'Invalid index')
+    elif split_command[0] == 'min':
+        output = find_min(split_command[1])
+        print(output)
+    elif split_command[0] == 'max':
+        output = find_max(split_command[1])
+        print(output)
+    elif split_command[0] == 'first':
+        if 0 < int(split_command[1]) <= list_length and ( split_command[2] == 'even' or split_command[2] == 'odd'):
+            first_last = []
+            first_last = first_count(int(split_command[1]), split_command[2])
+            print(first_last)
+        else:
+            print(f'Invalid count')
+    elif split_command[0] == 'last':
+        if 0 < int(split_command[1]) <= list_length and ( split_command[2] == 'even' or split_command[2] == 'odd'):
+            first_last = []
+            first_last = last_count(int(split_command[1]), split_command[2])
+            print(first_last)
+        else:
+            print(f'Invalid count')
+    else:
+        pass
+
+print(input_list)
