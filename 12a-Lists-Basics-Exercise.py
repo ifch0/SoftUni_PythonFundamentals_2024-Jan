@@ -156,4 +156,172 @@ for i in range(digits_to_remove):
 
 print(*input_int_list, sep=', ')
 
-# 
+# 07. Easter Gifts
+
+string_input = input()
+
+gift_list = string_input.split(' ')
+output_list = []
+no_money = False
+
+
+def OutOfStock(gift):
+    for i in range(len(gift_list)):
+        if gift_list[i] == gift:
+            gift_list[i] = 'None'
+
+def Required(gift, index):
+    if 0 <= index < len(gift_list):
+        gift_list[index] = gift
+
+def JustInCase(gift):
+    gift_list.pop()
+    gift_list.append(gift)
+
+while no_money == False:
+    user_command = input()
+
+    command_list = user_command.split(' ')
+
+    if command_list[0] == 'No' and command_list[1] == 'Money':
+        no_money = True
+    elif command_list[0] == 'OutOfStock':
+        OutOfStock(command_list[1])
+    elif command_list[0] == 'Required':
+        Required(command_list[1], int(command_list[2]))
+    elif command_list[0] == 'JustInCase':
+        JustInCase(command_list[1])
+    else:
+        pass
+
+for gift in gift_list:
+    if gift != 'None':
+        output_list.append(gift)
+print(*output_list, sep=' ')
+
+# 08. Seize the Fire 
+
+fires_and_cells_input = input()
+available_water = int(input())
+cells_done = []
+firs_and_cells_list = fires_and_cells_input.split('#')
+
+for i in firs_and_cells_list:
+    fire_cell = i.split(' = ')
+
+    if (fire_cell[0] == 'High' and 81 <= int(fire_cell[1]) <=125) or (fire_cell[0] == 'Medium' and 51 <= int(fire_cell[1]) <=80) or (fire_cell[0] == 'Low' and 1 <= int(fire_cell[1]) <=50):
+        if available_water >= int(fire_cell[1]):
+            available_water -= int(fire_cell[1])
+            cells_done.append(int(fire_cell[1]))
+    else:
+        pass
+
+print(f'Cells:')
+for cell in cells_done:
+    print(f'- {cell}')
+
+total_fire = sum(cells_done)
+effort = total_fire * 0.25
+
+print(f'Effort: {effort:0.2f}')
+print(f'Total Fire: {total_fire}')
+
+# 09. Hello, France
+
+items_input = input()
+initial_budget = float(input())
+ticket_price = 150
+
+available_budget = initial_budget
+
+bought_items = []
+
+items_list = items_input.split('|')
+
+for item in items_list:
+    item_properties = item.split('->')
+
+    if (item_properties[0] == 'Clothes' and float(item_properties[1]) <= 50) or (item_properties[0] == 'Shoes' and float(item_properties[1]) <= 35) or (item_properties[0] == 'Accessories' and float(item_properties[1]) <= 20.50):
+        if available_budget >= float(item_properties[1]):
+            available_budget -= float(item_properties[1])
+            bought_items.append(float(item_properties[1]))
+
+for i in range(len(bought_items)):
+    bought_items[i] *= 1.4
+    bought_items[i] = round(bought_items[i], 2)
+
+for new_price in bought_items:
+    print(f'{new_price:0.2f} ', end='')
+print()
+
+available_budget += sum(bought_items)
+profit = available_budget - initial_budget
+
+print(f'Profit: {profit:0.2f}')
+
+if available_budget >= ticket_price:
+    print(f'Hello, France!')
+else:
+    print(f'Not enough money.')
+
+
+# 10. Bread Factory
+
+events_input = input()
+
+events = events_input.split('|')
+
+available_energy = 100
+current_coins = 100
+
+closed = False
+
+def rest(added_energy):
+    global available_energy
+    energy_gap = 100 - available_energy
+    if added_energy <= energy_gap:
+        available_energy += added_energy
+        print(f'You gained {added_energy} energy.')
+    else:
+        available_energy += energy_gap
+        print(f'You gained {energy_gap} energy.')
+    print(f'Current energy: {available_energy}.')
+
+def order(coins):
+    global available_energy
+    global current_coins
+    if available_energy >= 30:
+        available_energy -= 30
+        current_coins += coins
+        print(f'You earned {coins} coins.')
+    else:
+        available_energy += 50
+        print(f'You had to rest!')
+
+def ingredients(ingredient, coins):
+    global current_coins
+    global closed
+    if current_coins >= coins:
+        current_coins -= coins
+        print(f'You bought {ingredient}.')
+    else:
+        print(f'Closed! Cannot afford {ingredient}.')
+        closed = True
+
+for event in events:
+    event_details = event.split('-')
+
+    if event_details[0] == 'rest':
+        rest(int(event_details[1]))
+    elif event_details[0] == 'order':
+        order(int(event_details[1]))
+    else:
+        ingredients(event_details[0], int(event_details[1]))
+
+    if closed == True:
+        break
+
+if closed != True:
+    print(f'Day completed!')
+    print(f'Coins: {current_coins}')
+    print(f'Energy: {available_energy}')
