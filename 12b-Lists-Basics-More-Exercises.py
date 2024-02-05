@@ -152,116 +152,110 @@ if matrix[2][0] == matrix[1][1] == matrix[0][2] == 2:
 print(output)
 
 # 06. List Manipulator
-# 80/100 in Judge.
-
 from math import inf
 
-input_string = input()
+string_input = input()
 
-input_list = [int(x) for x in input_string.split(' ') ]
-
-list_length = len(input_list)
-temp_list = []
-first_last = []
-output = ''
+list_input = [int(x) for x in string_input.split(' ')]
 
 end = False
 
 def exchange(index):
     temp_list = []
-    for i in range(index +1, list_length):
-        temp_list.append(input_list[i])
-    for i in range(0, index +1):
-        temp_list.append(input_list[i])
-
-    return (temp_list)
-
-def find_min(even_odd):
-    min = inf
-    position = 0
-    for i in range(list_length):
-        if input_list[i] <= min:
-            if even_odd == 'even' and input_list[i] % 2 == 0:
-                min = input_list[i]
-                position = i
-            elif even_odd == 'odd' and input_list[i] % 2 != 0 and input_list[i] and input_list[i] != 0:
-                min = input_list[i]
-                position = i
-
-    if min != inf:
-        return position
+    if 0 <= index < len(list_input):
+        for i in range(index + 1, len(list_input)):
+            temp_list.append(list_input[i])
+        for j in range(0, index + 1):
+            temp_list.append(list_input[j])
+        return temp_list
     else:
-        return 'No matches'
+        print('Invalid index')
+        return list_input
 
-def find_max(even_odd):
+def max_even_odd(even_odd):
     max = -inf
-    position = 0
-    for i in range(list_length):
-        if input_list[i] >= max:
-            if even_odd == 'even' and input_list[i] % 2 == 0:
-                max = input_list[i]
-                position = i
-            elif even_odd == 'odd' and input_list[i] % 2 != 0:
-                max = input_list[i]
-                position = i
+    max_index = 0
+    for i in range(len(list_input)):
+        if list_input[i] >= max and list_input[i] % 2 == 0 and even_odd == 'even':
+            max = list_input[i]
+            max_index = i
+        elif list_input[i] >= max and list_input[i] % 2 != 0 and even_odd == 'odd':
+            max = list_input[i]
+            max_index = i
+        else:
+            pass
 
     if max != -inf:
-        return position
+        print(max_index)
     else:
-        return 'No matches'
+        print('No matches')
 
-def first_count(count, even_odd):
+def min_even_odd(even_odd):
+    min = inf
+    min_index = 0
+    for i in range(len(list_input)):
+        if list_input[i] <= min and list_input[i] % 2 == 0 and even_odd == 'even':
+            min = list_input[i]
+            min_index = i
+        elif list_input[i] <= min and list_input[i] % 2 != 0 and even_odd == 'odd':
+            min = list_input[i]
+            min_index = i
+        else:
+            pass
+
+    if min != inf:
+        print(min_index)
+    else:
+        print('No matches')
+
+def first(count, even_odd):
     temp_list = []
-    for i in range(list_length):
-            if even_odd == 'even' and input_list[i] % 2 == 0:
-                temp_list.append(input_list[i])
-            elif even_odd == 'odd' and input_list[i] % 2 != 0:
-                temp_list.append(input_list[i])
+    if 0 <= count <= len(list_input):
+        for i in range(len(list_input)):
+            if list_input[i] % 2 == 0 and even_odd == 'even':
+                temp_list.append(list_input[i])
+            elif list_input[i] % 2 != 0 and even_odd == 'odd':
+                temp_list.append(list_input[i])
+            else:
+                pass
+        print(temp_list[0:count])
+    else:
+        print(f'Invalid count')
 
-    return temp_list[0:count]
-
-def last_count(count, even_odd):
+def last(count, even_odd):
     temp_list = []
-    for i in range(list_length - 1, -1, -1):
-            if even_odd == 'even' and input_list[i] % 2 == 0:
-                temp_list.append(input_list[i])
-            elif even_odd == 'odd' and input_list[i] % 2 != 0 and input_list:
-                temp_list.append(input_list[i])
-
-    return temp_list[0:count]
+    if 0 <= count <= len(list_input):
+        for i in range(len(list_input)):
+            if list_input[i] % 2 == 0 and even_odd == 'even':
+                temp_list.append(list_input[i])
+            elif list_input[i] % 2 != 0 and even_odd == 'odd':
+                temp_list.append(list_input[i])
+            else:
+                pass
+        if count >= len(temp_list):
+            print(temp_list)
+        else:
+            print(temp_list[-count:])
+    else:
+        print(f'Invalid count')
 
 while end == False:
-    command_input = input()
-    split_command = command_input.split(' ')
+    command = input()
+    split_command = command.split(' ')
 
     if split_command[0] == 'end':
         end = True
     elif split_command[0] == 'exchange':
-        if 0 <= int(split_command[1]) < list_length:
-            input_list = exchange(int(split_command[1]))
-        else:
-            print(f'Invalid index')
-    elif split_command[0] == 'min':
-        output = find_min(split_command[1])
-        print(output)
+        list_input = exchange(int(split_command[1]))
     elif split_command[0] == 'max':
-        output = find_max(split_command[1])
-        print(output)
+        max_even_odd(split_command[1])
+    elif split_command[0] == 'min':
+        min_even_odd(split_command[1])
     elif split_command[0] == 'first':
-        if 0 < int(split_command[1]) <= list_length and ( split_command[2] == 'even' or split_command[2] == 'odd'):
-            first_last = []
-            first_last = first_count(int(split_command[1]), split_command[2])
-            print(first_last)
-        else:
-            print(f'Invalid count')
+        first(int(split_command[1]), split_command[2])
     elif split_command[0] == 'last':
-        if 0 < int(split_command[1]) <= list_length and ( split_command[2] == 'even' or split_command[2] == 'odd'):
-            first_last = []
-            first_last = last_count(int(split_command[1]), split_command[2])
-            print(first_last)
-        else:
-            print(f'Invalid count')
+        last(int(split_command[1]), split_command[2])
     else:
         pass
 
-print(input_list)
+print(list_input)
