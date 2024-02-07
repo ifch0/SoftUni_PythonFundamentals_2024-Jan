@@ -38,7 +38,7 @@ if distance_to_center(x1, y1) < distance_to_center(x2, y2):
 else:
     print(f'({floor(x2)}, {floor(y2)})')
 
-# 03. Longer Line (60/100)
+# 03. Longer Line
 
 from math import sqrt, floor
 
