@@ -43,23 +43,21 @@ else:
 from math import sqrt, floor
 
 total_lines = 2
-points_per_line = 2
-coordinates_per_point = 2
 
 total_coordinates = []
 line_lengths = []
 longest_line_index = ''
 
-def fill_coordinates(lines, points_per_line, coordinates_per_point):
+def fill_coordinates(lines):
     all_coordinates = []
     for line in range(total_lines):
-        point_coordinate = []
-        for point in range(points_per_line):
-            temp_coordinate = []
-            for coordinate in range(coordinates_per_point):
-                temp_coordinate.append(float(input()))
-            point_coordinate.append(temp_coordinate)
-        all_coordinates.append(point_coordinate)
+        lines = []
+        for i in range(2):
+            points = []
+            points.append(float(input()))
+            points.append(float(input()))
+            lines.append(points)
+        all_coordinates.append(lines)
     return all_coordinates
 
 def distance_between_points(x1, y1, x2, y2):
@@ -86,11 +84,12 @@ def closest_point_to_center(line_index, all_coordinates):
 def print_coordinates(points_coordinates_list):
     print(*points_coordinates_list, sep='')
 
-total_coordinates = fill_coordinates(total_lines, points_per_line, coordinates_per_point)
+total_coordinates = fill_coordinates(total_lines)
 line_lengths = line_length(total_lines, total_coordinates)
 longest_line_index = line_lengths.index(max(line_lengths))
 longest_line_coordinates = closest_point_to_center(longest_line_index, total_coordinates)
 print_coordinates(longest_line_coordinates)
+
 
 # 04. Tribonacci Sequence
 
