@@ -131,3 +131,37 @@ elif is_negative:
     print('negative')
 else:
     print('positive')
+
+# 05. Multiplication Sign (with function)
+
+integers_input = []
+
+for i in range(3):
+    integers_input.append(int(input()))
+
+negative_counter = 0
+is_zero = False
+is_negative = False
+
+def check_number(num, is_zero, negative_counter):
+    if num == 0:
+        is_zero = True
+    elif num < 0:
+        negative_counter += 1
+    else:
+        pass
+
+    return is_zero, negative_counter
+
+for i in range(len(integers_input)):
+    is_zero, negative_counter = check_number(integers_input[i], is_zero, negative_counter)
+
+if negative_counter % 2 != 0:
+    is_negative = True
+
+if is_zero:
+    print('zero')
+elif is_negative:
+    print('negative')
+else:
+    print('positive')
